@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "../components/Button";
 import { InputBox } from "../components/InputBox";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 
 export function Send(){
@@ -12,6 +12,7 @@ export function Send(){
     const [transferStatus , setTransferStatus] = useState("")
     const navigate = useNavigate()
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+    const ref = useRef()
 
 
 
@@ -30,7 +31,7 @@ export function Send(){
                 </div>
                 </div>
                 <div className="py-2">
-                <InputBox onChange={e => {
+                <InputBox  onChange={e => {
                     setAmmount(e.target.value)
                 }} label={"enter Ammount (Rs)"}/>
                 </div>
@@ -55,7 +56,7 @@ export function Send(){
                            
                             
                         })
-                    }catch{
+                    }catch(err){
                         return <></>
                     }
                         

@@ -10,6 +10,7 @@ export function Signup(){
     const [password , setPassword] = useState("")
     const [firstName , setFirstName] = useState("")
     const [lastName , setLastName] = useState("")
+    const [isLoading, setIsloading] = useState(false)
     const navigate = useNavigate();
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
     console.log(apiUrl)
@@ -32,15 +33,21 @@ export function Signup(){
                 }} label={'Password'} placeHolder={'password'} type={"password"}/>
                 <br/>
             <Button onClick={async ()=>{
+                try{
+                    setIsloading(true)
                const response =await axios.post(`${apiUrl}/api/v1/user/signup`,{
                 username:email,
                 firstName,
                 lastName,
                 password
                })
+                setIsloading(false)
                  localStorage.setItem("token",response.data.token)
-                 navigate("/dashboard")
-            }} label={"Signin"}/>
+                 navigate("/dashboard")} catch(e){
+                    setIsloading(false)
+                    alert("couldn't sign up")
+                 }
+            }} label={ isLoading ?  "Signing in.." : "signin"}/>
             <ButtonWarning label={"Already have an account"} to={"/login"} buttonText={"Login"}/>
         </div>
     </div>
