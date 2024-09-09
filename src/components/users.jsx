@@ -11,7 +11,10 @@ export function Users(){
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
     useEffect(()=>{
         setLoading(true);
-        axios.get(`${apiUrl}/api/v1/user/bulk?filter=${filter}`)
+        axios.get(`${apiUrl}/api/v1/user/bulk?filter=${filter}`,{ headers: { 
+            'authorization': `Bearer ${localStorage.getItem('token')}`, 
+            'Content-Type': 'application/json'
+          }})
         .then( (response) =>{
             setUsers(response.data.user)
             setLoading(false);
