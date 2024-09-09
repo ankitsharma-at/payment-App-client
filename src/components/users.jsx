@@ -9,7 +9,7 @@ export function Users(){
     const [filter , setFilter] = useState("")
     const [loading , setLoading] = useState(false)
     const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-    useMemo(()=>{
+    useEffect(()=>{
         setLoading(true);
         axios.get(`${apiUrl}/api/v1/user/bulk?filter=${filter}`)
         .then( (response) =>{
@@ -19,7 +19,7 @@ export function Users(){
     },[filter])
     
      return <div>
-        { loading ? <div className="flex justify-center items-center font-medium text-lg">loading...</div> :  
+        
         <div>
         <div>
         <div className="flex justify-center">
@@ -28,10 +28,11 @@ export function Users(){
         }} type={"search"} placeHolder={"search"}/>
         </div>
         </div>
+        { loading ? <div className="flex justify-center items-center font-medium text-lg">loading...</div> :  
         <div>
         {users.map( user =>{ return <div> <User user={user}/></div>})}
-        </div>
-        </div> }
+        </div>}
+        </div> 
     </div>
 }
 function User({user}){
